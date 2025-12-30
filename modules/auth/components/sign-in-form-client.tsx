@@ -25,7 +25,7 @@ await signIn("github")
 const SignInFormClient = () => {
   return (
     <Card className="w-full max-w-md bg-gray-100">
-      <CardHeader className="space-y-1">
+      <CardHeader className="space-y-1 text-black">
         <CardTitle className="text-2xl font-bold text-center">
           Sign In
         </CardTitle>
@@ -36,13 +36,13 @@ const SignInFormClient = () => {
 
       <CardContent className="grid gap-4">
         <form action={handleGoogleSignIn}>
-          <Button type="submit" variant={"outline"} className="w-full hover:bg-gray-200 cursor-pointer">
+          <Button type="submit" variant={"outline"} className="w-full hover:bg-gray-200 cursor-pointer text-black">
             <Chrome className="mr-2 h-4 w-4" />
             <span>Sign in with google</span>
           </Button>
         </form>
         <form action={handleGithubSignIn}>
-          <Button type="submit" variant={"outline"} className="w-full hover:bg-gray-200 cursor-pointer">
+          <Button type="submit" variant={"outline"} className="w-full hover:bg-gray-200 cursor-pointer text-black">
             <Github className="mr-2 h-4 w-4" />
             <span>Sign in with github</span>
           </Button>
