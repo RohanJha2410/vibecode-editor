@@ -132,14 +132,14 @@ export function TemplateFileTree({
   };
 
   return (
-    <Sidebar className="border-white/10">
+    <Sidebar className="border-white/10 bg-zinc-900">
       <SidebarContent className="bg-zinc-900">
         <SidebarGroup>
           <SidebarGroupLabel>{title}</SidebarGroupLabel>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <SidebarGroupAction>
-                <Plus className="h-4 w-4" />
+                <Plus className="h-4 w-4 cursor-pointer" />
               </SidebarGroupAction>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="border-white/10 bg-black" align="end">
@@ -288,7 +288,17 @@ function TemplateNode({
           <SidebarMenuButton
             isActive={isSelected}
             onClick={() => onFileSelect?.(file)}
-            className="flex-1"
+            className="flex-1
+  rounded-md
+  transition-colors
+
+  hover:bg-white/10
+  hover:text-white
+
+  data-[active=true]:bg-white/15
+  data-[active=true]:text-white
+  cursor-pointer
+"
           >
             <File className="h-4 w-4 mr-2 shrink-0" />
             <span>{fileName}</span>
@@ -404,7 +414,16 @@ function TemplateNode({
         >
           <div className="flex items-center group">
             <CollapsibleTrigger asChild>
-              <SidebarMenuButton className="flex-1">
+              <SidebarMenuButton className="flex-1
+      rounded-md
+      transition-colors
+
+      hover:bg-white/10
+      hover:text-white
+
+      data-[active=true]:bg-white/15
+      data-[active=true]:text-white
+     cursor-pointer">
                 <ChevronRight className="transition-transform" />
                 <Folder className="h-4 w-4 mr-2 shrink-0" />
                 <span>{folderName}</span>
