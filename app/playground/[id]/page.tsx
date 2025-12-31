@@ -106,7 +106,7 @@ const MainPlaygroundPage = () => {
 
               <div className="flex items-center gap-1">
                 <Tooltip>
-                  <TooltipTrigger>
+                  <TooltipTrigger asChild>
                     <Button
                       className=" border-white/20 "
                       size="sm"

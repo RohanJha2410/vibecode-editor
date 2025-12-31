@@ -26,7 +26,7 @@ export default async function Dashboard({
 
     return (
         <SidebarProvider>
-        <div className="flex min-h-screen w-full overflow-x-hidden">
+        <div className="flex min-h-screen w-full overflow-x-hidden bg-zinc-900" >
             {/*Dashboard Sidebar */}
             {/*@ts-ignore */}
             <DashboardSidebar initialPlaygroundData={formattedPlaygroundData} />

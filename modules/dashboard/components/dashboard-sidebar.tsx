@@ -72,7 +72,7 @@ export function DashboardSidebar({ initialPlaygroundData }: { initialPlaygroundD
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarMenu>
+          <SidebarMenu >
             <SidebarMenuItem>
               <SidebarMenuButton asChild isActive={pathname === "/"} tooltip="Home">
                 <Link href="/">
