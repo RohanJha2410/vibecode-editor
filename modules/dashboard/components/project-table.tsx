@@ -39,6 +39,8 @@ import Link from "next/link"
 import { useState } from "react"
 import { MoreHorizontal, Edit3, Trash2, ExternalLink, Copy, Download, Eye } from "lucide-react"
 import { toast } from "sonner"
+import { tr } from "date-fns/locale"
+import { MarkedToggleButton } from "./marked-toggle"
 
 
 interface ProjectTableProps {
@@ -66,41 +68,88 @@ export default function ProjectTable({
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [editData, setEditData] = useState<EditProjectData>({ title: "", description: "" })
   const [isLoading, setIsLoading] = useState(false)
-  const [favoutrie, setFavourite] = useState(false)
+  const [favourite, setFavourite] = useState(false)
   
   const handleEditClick = (project: Project) => {
-//    Write your logic here
+    setSelectedProject(project)
+    setEditData({
+      title:project.title,
+      description:project.description || ""
+    })
+    setEditDialogOpen(true)
   }
 
   const handleDeleteClick = async (project: Project) => {
-    //    Write your logic here
+     setSelectedProject(project)
+
+     setDeleteDialogOpen(true)
   }
 
   const handleUpdateProject = async () => {
-   //    Write your logic here
+     if(!selectedProject || !onUpdateProject) return
+
+     setIsLoading(true)
+
+     try {
+      await onUpdateProject(selectedProject.id, editData)
+      setEditDialogOpen(false)
+      toast.success("Project updated sucessfully !!!")
+     } catch (error) {
+      toast.error("Failed to update project")
+      console.error("Error updating project:", error)
+     } finally{
+      setIsLoading(false)
+     }
+    
   }
 
   const handleMarkasFavorite = async (project: Project) => {
-   //    Write your logic here
+
   }
 
   const handleDeleteProject = async () => {
-   //    Write your logic here
+    if(!selectedProject || !onDeleteProject) return
+
+    setIsLoading(true)
+    try {
+      await onDeleteProject(selectedProject.id)
+      setDeleteDialogOpen(false)
+      setSelectedProject(null)
+      toast.success("Project deleted successfully")
+    } catch (error) {
+      toast.error("Failed to delete project")
+      console.error("Error deleting project:", error)
+    }finally{
+      setIsLoading(false)
+    }
   }
 
   const handleDuplicateProject = async (project: Project) => {
-    //    Write your logic here
+     if(!onDuplicateProject) return
+
+     setIsLoading(true)
+     try {
+      await onDuplicateProject(project.id)
+      toast.success("Project duplicated successfully")
+     } catch (error) {
+      toast.error("Failed to duplicate project")
+      console.error("Error duplicating project:", error)
+     }finally{
+      setIsLoading(false)
+     }
   }
 
   const copyProjectUrl = (projectId: string) => {
-    //    Write your logic here
+     const url = `${window.location.origin}/playground/${projectId}`
+     navigator.clipboard.writeText(url)
+     toast.success("Project URL copied to clipboard")
   }
 
   return (
     <>
-      <div className="border rounded-lg overflow-hidden">
+      <div className="border rounded-lg overflow-hidden border-white/10">
         <Table>
-          <TableHeader>
+          <TableHeader className="[&_tr:not(:last-child)]:border-b [&_tr]:border-white/10">
             <TableRow>
               <TableHead>Project</TableHead>
               <TableHead>Template</TableHead>
@@ -109,11 +158,11 @@ export default function ProjectTable({
               <TableHead className="w-[50px]">Actions</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody className="[&_tr:not(:last-child)]:border-b [&_tr]:border-white/10">
             {projects.map((project) => (
               <TableRow key={project.id}>
                 <TableCell className="font-medium">
-                  <div className="flex flex-col">
+                  <div className="flex flex-col border-white/10">
                     <Link href={`/playground/${project.id}`} className="hover:underline">
                       <span className="font-semibold">{project.title}</span>
                     </Link>
@@ -125,7 +174,11 @@ export default function ProjectTable({
                     {project.template}
                   </Badge>
                 </TableCell>
-                <TableCell>{format(new Date(project.createdAt), "MMM d, yyyy")}</TableCell>
+                <TableCell>
+                  <span className="text-sm text-gray-500">
+                    {format(new Date(project.createdAt), "MMM dd, yyyy")}
+                  </span>
+                </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-full overflow-hidden">
@@ -148,9 +201,15 @@ export default function ProjectTable({
                         <span className="sr-only">Open menu</span>
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuContent align="end" className="w-56
+    rounded-xl
+    border border-white/10
+    bg-zinc-900/95
+    backdrop-blur-xl
+    p-2
+    shadow-xl">
                       <DropdownMenuItem asChild>
-                        {/* <MarkedToggleButton markedForRevision={project.Starmark[0]?.isMarked} id={project.id} /> */}
+                        <MarkedToggleButton markedForRevision={project.Starmark[0]?.isMarked} id={project.id}/>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
                         <Link href={`/playground/${project.id}`} className="flex items-center">
@@ -196,7 +255,7 @@ export default function ProjectTable({
 
       {/* Edit Project Dialog */}
       <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px] bg-black border-white/10">
           <DialogHeader>
             <DialogTitle>Edit Project</DialogTitle>
             <DialogDescription>
@@ -237,7 +296,7 @@ export default function ProjectTable({
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-black border-white/10">
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Project</AlertDialogTitle>
             <AlertDialogDescription>
@@ -250,7 +309,7 @@ export default function ProjectTable({
             <AlertDialogAction
               onClick={handleDeleteProject}
               disabled={isLoading}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90 cursor-pointer"
             >
               {isLoading ? "Deleting..." : "Delete Project"}
             </AlertDialogAction>
