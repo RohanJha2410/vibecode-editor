@@ -102,14 +102,6 @@ Visit `http://localhost:3000` in your browser.
 
 
 
----
-
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
 ## 🙏 Acknowledgements
 
 * [Monaco Editor](https://microsoft.github.io/monaco-editor/)
