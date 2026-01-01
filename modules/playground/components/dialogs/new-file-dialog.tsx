@@ -34,7 +34,7 @@ function NewFileDialog({ isOpen, onClose, onCreateFile }: NewFileDialogProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="border-white/10">
+      <DialogContent className="border-white/10 bg-black">
         <DialogHeader>
           <DialogTitle>Create New File</DialogTitle>
           <DialogDescription>

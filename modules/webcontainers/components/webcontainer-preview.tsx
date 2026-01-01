@@ -193,7 +193,7 @@ const WebContainerPreview = ({
           );
         }
 
-        const startProcess = await instance.spawn("npm", ["run", "dev"]);
+        const startProcess = await instance.spawn("npm", ["run","start" ,"dev", ]);
 
         instance.on("server-ready", (port: number, url: string) => {
           if (terminalRef.current?.writeToTerminal) {
