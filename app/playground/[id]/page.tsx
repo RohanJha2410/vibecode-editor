@@ -31,6 +31,9 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import PlaygroundEditor from "@/modules/playground/components/playground-editor";
+// import { writeFileSync } from "node:fs";
+import { useWebContainer } from "@/modules/webcontainers/hooks/useWebContainer";
+import WebContainerPreview from "@/modules/webcontainers/components/webcontainer-preview";
 
 const MainPlaygroundPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -50,6 +53,16 @@ const MainPlaygroundPage = () => {
     openFile,
     openFiles,
   } = useFileExplorer();
+
+  const {
+    serverUrl,
+    isLoading: containerLoading,
+    instance,
+    writeFileSync,
+    error: containerError,
+
+    //@ts-ignore
+  } = useWebContainer({ templateData });
 
   useEffect(() => {
     setPlaygroundId(id);
@@ -277,26 +290,35 @@ const MainPlaygroundPage = () => {
                   </Tabs>
                 </div>
                 <div className="flex h-full">
-                  {/* Editor */}
-                  <div
-                    className={`h-full transition-all duration-300 ${
-                      isPreviewVisible ? "w-1/2" : "w-full"
-                    }`}
-                  >
-                    <PlaygroundEditor
-                      activeFile={activeFile}
-                      content={activeFile?.content || ""}
-                      onContentChange={() => {}}
-                    />
-                  </div>
+  {/* Editor */}
+  <div
+    className={`h-full transition-all duration-300 ${
+      isPreviewVisible ? "w-1/2" : "w-full"
+    }`}
+  >
+    <PlaygroundEditor
+      activeFile={activeFile}
+      content={activeFile?.content || ""}
+      onContentChange={() => {}}
+    />
+  </div>
 
-                  {/* Preview */}
-                  {isPreviewVisible && (
-                    <div className="w-1/2 h-full border-l border-white/10 bg-zinc-900">
-                      {/* Preview content */}
-                    </div>
-                  )}
-                </div>
+  {/* Preview */}
+  {isPreviewVisible && (
+    <div className="w-1/2 h-full border-l border-white/10 bg-zinc-950 transition-all duration-300">
+      <WebContainerPreview
+        templateData={templateData}
+        instance={instance}
+        writeFileSync={writeFileSync}
+        isLoading={containerLoading}
+        error={containerError}
+        serverUrl={serverUrl}
+        forceResetup={false}
+      />
+    </div>
+  )}
+</div>
+
               </div>
             ) : (
               <div className="flex flex-col h-full items-center justify-center text-muted-foreground gap-4">
