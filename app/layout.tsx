@@ -42,7 +42,19 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             <div className="flex flex-col min-h-screen">
-              <Toaster />
+              <Toaster position="bottom-right"
+              richColors
+               toastOptions={{
+            className: `
+              bg-zinc-900
+              text-white
+              border border-white/10
+              rounded-md
+              px-4 py-3
+              shadow-lg
+            `,
+          }}
+              />
               <div className="flex-1">
                 {children}
               </div>

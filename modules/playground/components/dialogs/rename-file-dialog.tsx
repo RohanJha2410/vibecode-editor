@@ -48,7 +48,7 @@ function RenameFileDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="border-white/10">
+      <DialogContent className="border-white/10  bg-black">
         <DialogHeader>
           <DialogTitle>Rename File</DialogTitle>
           <DialogDescription>Enter a new name for the file.</DialogDescription>

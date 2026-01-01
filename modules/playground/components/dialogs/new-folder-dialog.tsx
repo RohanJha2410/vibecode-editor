@@ -32,7 +32,7 @@ interface NewFolderDialogProps {
   
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="border-white/10">
+        <DialogContent className="border-white/10 bg-black">
           <DialogHeader>
             <DialogTitle>Create New Folder</DialogTitle>
             <DialogDescription>Enter a name for the new folder.</DialogDescription>
