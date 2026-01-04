@@ -16,7 +16,7 @@ export default function HomeLayout({
 }) {
   return (
     <>
-      <Header />
+      <Header/>
                   <div
         className={cn(
           "absolute inset-0",
