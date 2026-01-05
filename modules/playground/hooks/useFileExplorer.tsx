@@ -230,12 +230,14 @@ export const useFileExplorer = create<FileExplorerState>((set, get) => ({
       await saveTemplateData(updatedTemplateData);
 
       // Sync with web container
-      if (instance && instance.fs) {
-        const folderPath = parentPath
-          ? `${parentPath}/${newFolder.folderName}`
-          : newFolder.folderName;
-        await instance.fs.mkdir(folderPath, { recursive: true });
-      }
+     if (typeof window !== "undefined" && instance?.fs) {
+  const folderPath = parentPath
+    ? `${parentPath}/${newFolder.folderName}`
+    : newFolder.folderName;
+
+  await instance.fs.mkdir(folderPath, { recursive: true });
+}
+
     } catch (error) {
       console.error("Error adding folder:", error);
       toast.error("Failed to create folder");
