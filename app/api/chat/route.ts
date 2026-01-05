@@ -35,7 +35,7 @@ Always provide clear, practical answers. Use proper code formatting when showing
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "codellama:latest",
+        model: "gemma:2b",
         prompt: prompt,
         stream: false,
         options: {
