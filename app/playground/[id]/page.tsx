@@ -25,22 +25,15 @@ import {
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { Tabs, TabsList } from "@/components/ui/tabs";
 import { TabsTrigger } from "@radix-ui/react-tabs";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
 import { } from "@/modules/playground/components/playground-editor";
 // import { writeFileSync } from "node:fs";
 import { useWebContainer } from "@/modules/webcontainers/hooks/useWebContainer";
 import WebContainerPreview from "@/modules/webcontainers/components/webcontainer-preview";
 import LoadingStep from "@/modules/playground/components/loader";
-import { file } from "zod";
 import { findFilePath } from "@/modules/playground/lib";
 import { toast } from "sonner";
 import ToggleAI from "@/modules/playground/components/toggle-ai";
 import { useAISuggestions } from "@/modules/playground/hooks/useAISuggestion";
-import { editor } from "monaco-editor";
 import { PlaygroundEditor } from "@/modules/playground/components/playground-editor";
 
 const MainPlaygroundPage = () => {
@@ -575,8 +568,8 @@ const MainPlaygroundPage = () => {
         writeFileSync={writeFileSync}
         isLoading={containerLoading}
         error={containerError}
-        serverUrl={serverUrl}
-        forceResetup={false}
+        serverUrl={serverUrl ?? ""}
+        forceResetUp={false}
       />
     </div>
   )}

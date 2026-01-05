@@ -1,4 +1,7 @@
+//@ts-ignore
 import { Component } from '@angular/core';
+
+//@ts-ignore
 import { bootstrapApplication } from '@angular/platform-browser';
 
 @Component({

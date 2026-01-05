@@ -128,33 +128,30 @@ export const editProjectById = async(id:string, data:{title:string, description:
     }
 }
 
-export const duplicateProjectById = async(id: string) => {
-    try {
-        const originalPlayground = await db.playground.findUnique({
-            where:{id},
-            //todo: add template files
-        })
+export const duplicateProjectById = async (id: string): Promise<void> => {
+  try {
+    const originalPlayground = await db.playground.findUnique({
+      where: { id },
+    })
 
-        if(!originalPlayground){
-            throw new Error("Original Playground not found !!")
-        }
-
-        const duplicatedPlayground = await db.playground.create({
-            data:{
-                title: `${originalPlayground.title} (Copy)`,
-                description: originalPlayground.description,
-                template:originalPlayground.template,
-                userId: originalPlayground.userId
-
-                //todo: add template files
-            }
-        })
-
-        revalidatePath("/dashboard")
-        return duplicatedPlayground
-    } catch (error) {
-        console.log(error);
-        
+    if (!originalPlayground) {
+      throw new Error("Original Playground not found !!")
     }
+
+    await db.playground.create({
+      data: {
+        title: `${originalPlayground.title} (Copy)`,
+        description: originalPlayground.description,
+        template: originalPlayground.template,
+        userId: originalPlayground.userId,
+      },
+    })
+
+    revalidatePath("/dashboard")
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
 }
+
 

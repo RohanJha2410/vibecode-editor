@@ -350,25 +350,25 @@ export const AIChatSidePanel: React.FC<AIChatSidePanelProps> = ({
               className="px-6"
             >
               <div className="flex items-center justify-between mb-4">
-                <TabsList className="grid w-full grid-cols-4 max-w-md">
-                  <TabsTrigger value="chat" className="flex items-center gap-1">
-                    <MessageSquare className="h-3 w-3" />
+                <TabsList className="grid w-full grid-cols-4 max-w-md ">
+                  <TabsTrigger value="chat" className="flex items-center gap-1 hover:bg-zinc-800 cursor-pointer">
+                    <MessageSquare className="h-3 w-3 " />
                     Chat
                   </TabsTrigger>
                   <TabsTrigger
                     value="review"
-                    className="flex items-center gap-1"
+                    className="flex items-center gap-1 hover:bg-zinc-800 cursor-pointer"
                   >
                     <Code className="h-3 w-3" />
                     Review
                   </TabsTrigger>
-                  <TabsTrigger value="fix" className="flex items-center gap-1">
+                  <TabsTrigger value="fix" className="flex items-center gap-1 hover:bg-zinc-800 cursor-pointer">
                     <RefreshCw className="h-3 w-3" />
                     Fix
                   </TabsTrigger>
                   <TabsTrigger
                     value="optimize"
-                    className="flex items-center gap-1"
+                    className="flex items-center gap-1 hover:bg-zinc-800 cursor-pointer"
                   >
                     <Zap className="h-3 w-3" />
                     Optimize
@@ -504,24 +504,24 @@ export const AIChatSidePanel: React.FC<AIChatSidePanelProps> = ({
                           remarkPlugins={[remarkGfm, remarkMath]}
                           rehypePlugins={[rehypeKatex]}
                           components={{
-                            code: ({ children, className, inline }) => {
-                              if (inline) {
-                                return (
-                                  <code className="bg-zinc-800 px-1 py-0.5 rounded text-sm">
-                                    {children}
-                                  </code>
-                                );
-                              }
-                              return (
-                                <div className="bg-zinc-800 rounded-lg p-4 my-4">
-                                  <pre className="text-sm text-zinc-100 overflow-x-auto">
-                                    <code className={className}>
-                                      {children}
-                                    </code>
-                                  </pre>
-                                </div>
-                              );
-                            },
+                            code: ({ children, className }) => {
+  const isBlock = className?.includes("language-")
+
+  if (!isBlock) {
+    return (
+      <code className="bg-zinc-800 px-1 py-0.5 rounded text-sm">
+        {children}
+      </code>
+    )
+  }
+
+  return (
+    <code className={className}>
+      {children}
+    </code>
+  )
+}
+
                           }}
                         >
                           {msg.content}
