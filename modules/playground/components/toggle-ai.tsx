@@ -132,7 +132,7 @@ const ToggleAI: React.FC<ToggleAIProps> = ({
           
           <DropdownMenuItem 
             onClick={() => onToggle(!isEnabled)}
-            className="py-2.5 cursor-pointer"
+            className="py-2.5 cursor-pointer hover:bg-zinc-900"
           >
             <div className="flex items-center justify-between w-full">
               <div className="flex items-center gap-3">
@@ -142,7 +142,7 @@ const ToggleAI: React.FC<ToggleAIProps> = ({
                   <PowerOff className="h-4 w-4 text-muted-foreground" />
                 )}
                 <div>
-                  <div className="text-sm font-medium">
+                  <div className="text-sm font-medium ">
                     {isEnabled ? "Disable" : "Enable"} AI
                   </div>
                   <div className="text-xs text-muted-foreground">
@@ -168,7 +168,7 @@ const ToggleAI: React.FC<ToggleAIProps> = ({
           
           <DropdownMenuItem 
             onClick={() => setIsChatOpen(true)}
-            className="py-2.5 cursor-pointer"
+            className="py-2.5 cursor-pointer hover:bg-zinc-900"
           >
             <div className="flex items-center gap-3 w-full">
               <FileText className="h-4 w-4 text-muted-foreground" />
